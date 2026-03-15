@@ -4,7 +4,56 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz | Good Flag Great Flag</title>
-    <link rel="icon" type="image/svg+xml" href="/good-flag-great-flag/favicon.svg" />
+    <meta
+      name="description"
+      content="Test your knowledge of flag design by judging 250 real national flags against the 5 NAVA principles of good flag design."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/good-flag-great-flag/favicon.svg"
+    />
+    <link
+      rel="canonical"
+      href="https://pataruco.github.io/good-flag-great-flag/quiz.html"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Quiz | Good Flag Great Flag" />
+    <meta
+      property="og:description"
+      content="Test your knowledge of flag design by judging 250 real national flags against the 5 NAVA principles of good flag design."
+    />
+    <meta
+      property="og:url"
+      content="https://pataruco.github.io/good-flag-great-flag/quiz.html"
+    />
+    <meta property="og:site_name" content="Good Flag Great Flag" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Quiz",
+        "name": "Good Flag or Bad Flag?",
+        "description": "Test your knowledge of flag design by judging 250 real national flags against the 5 NAVA principles of good flag design.",
+        "url": "https://pataruco.github.io/good-flag-great-flag/quiz.html",
+        "educationalAlignment": {
+          "@type": "AlignmentObject",
+          "alignmentType": "educationalSubject",
+          "targetName": "Vexillology"
+        },
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Good Flag Great Flag",
+          "url": "https://pataruco.github.io/good-flag-great-flag/"
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://restcountries.com" crossorigin />
+    <link rel="preconnect" href="https://flagcdn.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,9 +92,7 @@
         <h1 id="flag-name"></h1>
         <img id="flag-img" src="" alt="" style="display: none" />
         <div class="quiz-btns" style="display: none" id="quiz-btns">
-          <button class="quiz-btn" id="bad-flag" type="button">
-            Bad Flag
-          </button>
+          <button class="quiz-btn" id="bad-flag" type="button">Bad Flag</button>
           <button class="quiz-btn" id="good-flag" type="button">
             Good Flag
           </button>
