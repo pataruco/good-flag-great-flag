@@ -15,13 +15,13 @@ template.innerHTML = `
     background-color: var(--bg-color);
     color: var(--text-color, white);
     font-family: "Source Sans 3", system-ui, sans-serif;
-    padding: 4rem 2rem;
+    padding: clamp(3rem, 1.8rem + 4vw, 5rem) clamp(1.5rem, 0.6rem + 3vw, 3rem);
   }
 
   article {
     width: min(90%, 48rem);
     margin: 0 auto;
-    padding: clamp(1.5rem, 4vw, 3rem);
+    padding: clamp(1.5rem, 0.6rem + 3vw, 3rem);
     box-shadow: 0.6rem 0.6rem rgba(0, 0, 0, 0.55);
     background-color: var(--card-color);
     border-radius: 2px;
@@ -44,26 +44,26 @@ template.innerHTML = `
 
   h3 {
     font-family: "Merriweather", Georgia, serif;
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 800;
-    line-height: 1.2;
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
     margin-bottom: 0.3em;
   }
 
   h4 {
     font-family: "Merriweather", Georgia, serif;
-    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
     font-weight: 500;
-    line-height: 1.4;
-    opacity: 0.9;
+    line-height: 1.2;
     margin-bottom: 0.6em;
   }
 
   p {
-    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    font-size: clamp(1rem, 0.925rem + 0.25vw, 1.125rem);
     font-weight: 400;
-    line-height: 1.7;
-    opacity: 0.9;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
     max-width: 55ch;
   }
 

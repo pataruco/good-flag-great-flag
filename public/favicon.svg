@@ -1,0 +1,9 @@
+<svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  width="300"
+  height="200"
+><rect width="300" height="200" fill="#cb001f" /><path
+    d="M 300,0 150,200 0,0 300,0 z"
+    fill="#fff"
+  /><path d="M 255,0 150,140 45,0 255,0 z" fill="#002768" /></svg>

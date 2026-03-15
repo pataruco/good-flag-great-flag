@@ -74,7 +74,7 @@ template.innerHTML = `
 
   /* WCAG 2.5.5 Target Size Enhanced (AAA): min 44px */
   li a {
-    font-size: 1rem;
+    font-size: 1.25em;
     font-weight: 500;
     display: block;
     min-height: 44px;
@@ -172,6 +172,7 @@ template.innerHTML = `
     li a {
       display: inline-flex;
       align-items: center;
+      font-size: 1em;
       min-height: 44px;
       border-radius: 2px;
       padding: 0 0.8em;
