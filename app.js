@@ -2,8 +2,6 @@ var express = require('express'),
     app = express(),
     routes = require("./config/routes"),
     morgan = require('morgan'),
-    request = require('request'),
-    bodyParser = require('body-parser'),
     mongoose = require ("mongoose"),
     expressLayouts = require('express-ejs-layouts'),
     uristring = process.env.MONGOLAB_URI ||
@@ -13,24 +11,21 @@ var express = require('express'),
 
 //middleware
 app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.set('views', './views');
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 //Database connection
-// Makes connection asynchronously.  Mongoose will queue up database
-// operations and release them when the connection is complete.
-
-mongoose.connect(uristring, function (err, res) {
-  if (err) {
-    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-  } else {
-    console.log ('Succeeded connected to: ' + uristring);
-  }
-});
+mongoose.connect(uristring)
+  .then(function () {
+    console.log('Succeeded connected to: ' + uristring);
+  })
+  .catch(function (err) {
+    console.log('ERROR connecting to: ' + uristring + '. ' + err);
+  });
 
 // Server console
 app.use(function(req, res, next) {
