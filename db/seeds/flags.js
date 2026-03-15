@@ -1,23 +1,9 @@
-var REPL = require('repl');
 var mongoose = require ("mongoose");
 var db = require('../../models/flag');
-var repl = REPL.start("Flags >");
 
-uristring = process.env.MONGOLAB_URI ||
+var uristring = process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
             'mongodb://localhost:27017/flags';
-
-mongoose.connect(uristring, function (err, res) {
-  if (err) {
-    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-  } else {
-    console.log ('Succeeded connected to: ' + uristring);
-  }
-});
-
-repl.context.db = db;
-
-db.Flag.collection.remove();
 
 var flags =
 [ { name: 'Andorra',
@@ -152,7 +138,7 @@ var flags =
     isoCode: 'CH',
     goodFlag: true,
     url: 'http://pataruco.s3.amazonaws.com/good-flag/flags/ch.png' },
-  { name: 'Cote d’Ivoire',
+  { name: 'Cote d\'Ivoire',
     isoCode: 'CI',
     goodFlag: true,
     url: 'http://pataruco.s3.amazonaws.com/good-flag/flags/ci.png' },
@@ -799,37 +785,30 @@ var flags =
   { name: 'Zambia',
     isoCode: 'ZM',
     goodFlag: false,
-    url: 'http://pataruco.s3.amazonaws.com/good-flag/flags/zm.png' }
- ];
+    url: 'http://pataruco.s3.amazonaws.com/good-flag/flags/zm.png' },
+  { name: 'Zimbabwe',
+    isoCode: 'ZW',
+    goodFlag: false,
+    url: 'http://pataruco.s3.amazonaws.com/good-flag/flags/zw.png' }
+];
 
-flags.forEach(function(flag){
-  db.Flag.create({
-    name: flag.name,
-    isoCode: flag.isoCode,
-    goodFlag: flag.goodFlag,
-    url: flag.url
-  },
-
-  function(err, flag){
-    console.log('*******FLAG CREATED******');
-    console.log(flag.name);
-    console.log(flag);
-    flag.save();
+mongoose.connect(uristring)
+  .then(function () {
+    console.log('Succeeded connected to: ' + uristring);
+    return db.Flag.deleteMany({});
   })
-});
-
-db.Flag.create({
-  name: 'Zimbabwe',
-  isoCode: 'ZW',
-  goodFlag: false,
-  url: 'http://pataruco.s3.amazonaws.com/good-flag/flags/zw.png'
-  },
-  function(err, flag){
-    console.log('*******FLAG CREATED******');
-    console.log(flag.name);
-    console.log(flag);
+  .then(function () {
+    return db.Flag.create(flags);
+  })
+  .then(function (created) {
+    created.forEach(function (flag) {
+      console.log('*******FLAG CREATED******');
+      console.log(flag.name);
+    });
     console.log('*******DATABASE SEEDED******');
-
-    flag.save();
     process.exit();
-});
+  })
+  .catch(function (err) {
+    console.log('Error seeding flags: ' + err);
+    process.exit(1);
+  });
