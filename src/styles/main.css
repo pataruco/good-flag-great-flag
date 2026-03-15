@@ -3,6 +3,7 @@
 	--body-font: "Fira Sans", sans-serif;
 	--main-font-color: white;
 	--main-box-shadow: 0.5em 0.5em rgba(0, 0, 0, 0.65);
+	--focus-color: #005fcc;
 	font-size: 16px;
 }
 
@@ -50,9 +51,23 @@ button {
 	cursor: pointer;
 }
 
+/* Focus indicators — WCAG 2.4.12 Focus Appearance (AAA) */
+:focus-visible {
+	outline: 3px solid var(--focus-color);
+	outline-offset: 3px;
+}
+
+/* High-contrast focus for light backgrounds */
+.conclusion-1 :focus-visible,
+.intro-2 :focus-visible {
+	outline-color: #000;
+}
+
 .btn {
-	padding: 0.4em;
+	padding: 0.6em 1em;
 	border: 1px solid;
+	min-height: 44px;
+	min-width: 44px;
 }
 
 .section {
@@ -71,6 +86,18 @@ button {
 }
 
 /* Utils */
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
 .clearfix::before,
 .clearfix::after {
 	content: " ";
@@ -106,21 +133,21 @@ button {
 /* ─── Root / Home page ─── */
 
 .intro-1 {
-	background-color: #ff9800;
+	background-color: #e65100;
 
 	& article {
-		background-color: #f44336;
+		background-color: #7f0000;
 
 		& blockquote {
-			border-right: 0.5em solid #ff9800;
-			border-bottom: 0.5em solid #ff9800;
+			border-right: 0.5em solid #e65100;
+			border-bottom: 0.5em solid #e65100;
 			box-shadow: 0.5em 0.5em rgba(0, 0, 0, 0.65);
 			font-weight: 500;
 			font-size: 2em;
 			padding: 0.2em;
 		}
 
-		& span {
+		& .scroll-cue {
 			text-align: center;
 			display: block;
 		}
@@ -131,7 +158,7 @@ button {
 	background-color: rgba(205, 220, 57, 1);
 
 	& article {
-		background-color: rgba(0, 150, 136, 1);
+		background-color: #00695c;
 	}
 
 	& p {
@@ -140,10 +167,23 @@ button {
 }
 
 .intro-3 {
-	background-color: rgba(255, 64, 129, 1);
+	background-color: #c2185b;
 
 	& article {
-		background-color: rgba(96, 125, 139, 1);
+		background-color: #37474f;
+	}
+
+	& .subtitle {
+		font-size: 1.5rem;
+	}
+
+	& .citations {
+		margin-top: 1em;
+
+		& cite {
+			display: block;
+			margin-top: 0.3em;
+		}
 	}
 }
 
@@ -151,10 +191,10 @@ button {
 	background-color: rgba(255, 193, 7, 1);
 
 	& article {
-		background-color: rgba(33, 150, 243, 1);
+		background-color: #0d47a1;
 	}
 
-	& h2 {
+	& .scroll-cue {
 		text-align: center;
 	}
 
@@ -164,10 +204,10 @@ button {
 }
 
 .conclusion-2 {
-	background-color: rgba(244, 67, 54, 1);
+	background-color: #c62828;
 
 	& article {
-		background-color: rgba(255, 87, 34, 1);
+		background-color: #862e00;
 	}
 }
 
@@ -207,12 +247,13 @@ button {
 
 .where-button {
 	font-size: 1.5rem;
-	line-height: 0;
+	line-height: 1;
 	text-align: right;
 	font-weight: lighter;
 	text-decoration: underline;
 	display: block;
 	width: 100%;
+	min-height: 44px;
 }
 
 .quiz-btns {
@@ -220,19 +261,21 @@ button {
 }
 
 .quiz-btn {
-	padding: 0.5em 1em;
+	padding: 0.75em 1.5em;
 	margin: 0 0.25em;
 	font-size: 1rem;
 	cursor: pointer;
 	border: none;
 	color: white;
+	min-height: 44px;
+	min-width: 44px;
 
 	&:first-child {
-		background-color: rgba(244, 67, 54, 1);
+		background-color: #c62828;
 	}
 
 	&:last-child {
-		background-color: rgba(76, 175, 80, 1);
+		background-color: #2e7d32;
 	}
 }
 
@@ -252,16 +295,16 @@ button {
 
 	& .close-map {
 		float: right;
-		font-size: 1rem;
-		background-color: red;
-		width: 20px;
-		height: 20px;
+		font-size: 1.2rem;
+		background-color: #c62828;
+		min-width: 44px;
+		min-height: 44px;
 		text-align: center;
 		color: white;
 		padding: 0;
 		border: none;
 		cursor: pointer;
-		line-height: 20px;
+		line-height: 44px;
 	}
 }
 
@@ -288,31 +331,32 @@ button {
 /* ─── Watch page ─── */
 
 .watch-intro {
-	background-color: rgba(255, 87, 34, 1);
+	background-color: #bf360c;
 
 	& article {
-		background-color: rgba(76, 175, 80, 1);
+		background-color: #1b5e20;
 	}
 
 	& p {
-		font-weight: 100;
+		font-weight: 300;
 		font-size: 1.5rem;
 	}
 }
 
 .youtube {
-	background-color: rgba(255, 64, 129, 1);
+	background-color: #c2185b;
 
 	& article {
-		background-color: rgba(96, 125, 139, 1);
+		background-color: #37474f;
 	}
 }
 
 .soundcloud {
-	background-color: rgba(83, 109, 254, 1);
+	background-color: #283593;
 
 	& article {
-		background-color: rgba(255, 193, 7, 1);
+		background-color: #f57f17;
+		color: #1a1a1a;
 	}
 }
 
@@ -323,10 +367,10 @@ button {
 /* ─── About page ─── */
 
 .about {
-	background-color: rgba(255, 193, 7, 1);
+	background-color: #f57f17;
 
 	& article {
-		background-color: rgba(103, 58, 183, 1);
+		background-color: #4a148c;
 	}
 
 	& p {
@@ -403,4 +447,16 @@ button {
 
 .animate-bounce-in {
 	animation-name: bounceIn;
+}
+
+/* WCAG 2.3.3 Animation from Interactions (AAA) */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }

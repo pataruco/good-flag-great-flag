@@ -17,10 +17,19 @@ template.innerHTML = `
     color: #fff;
     z-index: 100;
     text-decoration: none;
+    font-family: inherit;
   }
 
   .skip-link:focus {
     top: 0;
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+  }
+
+  /* Focus indicators — WCAG 2.4.12 (AAA) */
+  :focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
   }
 
   /* Mobile-first (320px+) */
@@ -28,7 +37,7 @@ template.innerHTML = `
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.93);
+    background-color: rgba(255, 255, 255, 0.97);
     box-shadow: 0.5em 0.5em rgba(0, 0, 0, 0.65);
     text-align: center;
     z-index: 1;
@@ -60,12 +69,16 @@ template.innerHTML = `
     margin-top: 0.2rem;
   }
 
+  /* WCAG 2.5.5 Target Size Enhanced (AAA): min 44px */
   li a {
     font-size: 1.2rem;
+    display: block;
+    min-height: 44px;
+    line-height: 44px;
   }
 
   a {
-    color: rgb(136, 136, 136);
+    color: #3b3b3b;
     padding: 0 0.6em;
     vertical-align: middle;
     text-decoration: none;
@@ -73,11 +86,11 @@ template.innerHTML = `
   }
 
   a:hover {
-    text-decoration: none;
+    text-decoration: underline;
   }
 
   .menu-icon {
-    color: rgb(136, 136, 136);
+    color: #3b3b3b;
     font-size: 3rem;
     display: block;
     text-align: right;
@@ -86,6 +99,8 @@ template.innerHTML = `
     border: none;
     cursor: pointer;
     font-family: inherit;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   /* Desktop (769px+) */
@@ -98,12 +113,13 @@ template.innerHTML = `
       position: fixed;
       top: 0;
       width: 100%;
-      background-color: rgba(255, 255, 255, 0.93);
+      background-color: rgba(255, 255, 255, 0.97);
       box-shadow: 0.5em 0.5em rgba(0, 0, 0, 0.65);
     }
 
-    /* On desktop, always show nav inline — not as popover */
+    /* On desktop, always show nav inline — override popover display:none */
     ul {
+      display: block;
       position: static;
       text-align: right;
       margin-right: 1.2em;
@@ -116,14 +132,20 @@ template.innerHTML = `
       margin-top: 0;
     }
 
+    li a {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+    }
+
     .menu-icon {
       display: none;
     }
   }
 </style>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <header>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
   <button
     class="menu-icon"
     aria-label="Toggle navigation"
@@ -131,7 +153,7 @@ template.innerHTML = `
     popovertarget="nav-list"
   >&#9776;</button>
   <nav aria-label="Main navigation">
-    <ul id="nav-list" popover="auto">
+    <ul id="nav-list" popover="auto" role="list">
       <li><a href="./index.html">Good Flag | Bad Flag</a></li>
       <li><a href="./quiz.html">Quiz</a></li>
       <li><a href="./watch.html">Watch &amp; Listen</a></li>

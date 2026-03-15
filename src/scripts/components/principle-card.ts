@@ -11,7 +11,7 @@ template.innerHTML = `
     justify-content: center;
     flex-direction: column;
     background-color: var(--bg-color);
-    color: white;
+    color: var(--text-color, white);
     font-family: inherit;
   }
 
@@ -32,13 +32,12 @@ template.innerHTML = `
     text-shadow: 0.12em 0.12em rgba(0, 0, 0, 0.65);
   }
 
-  h1 {
+  h3 {
     font-size: 2rem;
-    line-height: 0;
     font-family: inherit;
   }
 
-  h2 {
+  h4 {
     font-size: 1.5rem;
     font-family: inherit;
   }
@@ -48,12 +47,18 @@ template.innerHTML = `
     font-weight: 300;
     font-family: inherit;
   }
+
+  /* Focus indicators — WCAG 2.4.12 (AAA) */
+  :focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+  }
 </style>
 
 <article>
-  <span class="order"></span>
-  <h1></h1>
-  <h2></h2>
+  <span class="order" aria-hidden="true"></span>
+  <h3></h3>
+  <h4></h4>
   <p></p>
 </article>
 `;
@@ -67,6 +72,7 @@ class PrincipleCard extends HTMLElement {
 			"explanation",
 			"bg-color",
 			"card-color",
+			"text-color",
 		];
 	}
 
@@ -91,19 +97,31 @@ class PrincipleCard extends HTMLElement {
 		if (!shadow) return;
 
 		const order = shadow.querySelector(".order") as HTMLElement;
-		const h1 = shadow.querySelector("h1") as HTMLElement;
-		const h2 = shadow.querySelector("h2") as HTMLElement;
+		const h3 = shadow.querySelector("h3") as HTMLElement;
+		const h4 = shadow.querySelector("h4") as HTMLElement;
 		const p = shadow.querySelector("p") as HTMLElement;
 
-		order.textContent = this.getAttribute("order") || "";
-		h1.textContent = this.getAttribute("card-title") || "";
-		h2.textContent = this.getAttribute("subtitle") || "";
+		const orderVal = this.getAttribute("order") || "";
+		order.textContent = orderVal;
+		h3.textContent = this.getAttribute("card-title") || "";
+		h4.textContent = this.getAttribute("subtitle") || "";
 		p.textContent = this.getAttribute("explanation") || "";
 
 		this.style.setProperty("--bg-color", this.getAttribute("bg-color") || "");
 		this.style.setProperty(
 			"--card-color",
 			this.getAttribute("card-color") || "",
+		);
+		this.style.setProperty(
+			"--text-color",
+			this.getAttribute("text-color") || "white",
+		);
+
+		// WCAG 4.1.2: Provide accessible name for the region
+		this.setAttribute("role", "region");
+		this.setAttribute(
+			"aria-label",
+			`Principle ${orderVal}: ${this.getAttribute("card-title") || ""}`,
 		);
 	}
 }

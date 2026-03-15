@@ -15,25 +15,27 @@
       href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/src/styles/main.css" />
     <script type="module" src="/src/scripts/components/site-header.ts"></script>
     <script type="module" src="/src/scripts/quiz.ts"></script>
   </head>
   <body>
     <site-header></site-header>
     <main id="main-content" class="quiz-feature clearfix">
-      <section id="render-flag" class="render-flag">
-        <p id="quiz-loading" class="quiz-loading">Loading flags...</p>
+      <section id="render-flag" class="render-flag" aria-labelledby="flag-name">
+        <p id="quiz-loading" class="quiz-loading" role="status">
+          Loading flags...
+        </p>
         <button
           id="where"
           class="where-button"
           style="display: none"
           type="button"
         >
-          Where?
+          Where is this country?
         </button>
         <h1 id="flag-name"></h1>
         <img id="flag-img" src="" alt="" style="display: none" />
-        <br />
         <div class="quiz-btns" style="display: none" id="quiz-btns">
           <button class="quiz-btn" id="bad-flag" type="button">
             Bad Flag ✘
