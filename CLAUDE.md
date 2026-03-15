@@ -8,45 +8,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack
 
-- **Runtime**: Node 5.6.0 (pinned in `.nvmrc` and `package.json` engines)
-- **Framework**: Express with EJS templates (via `express-ejs-layouts`)
-- **Database**: MongoDB via Mongoose
-- **Frontend**: jQuery, vanilla JS
-- **Deployment**: Heroku (Procfile)
+- **Runtime**: Node 24 (pinned in `.nvmrc`)
+- **Build Tool**: Vite (MPA mode — 4 separate HTML entry points)
+- **Language**: TypeScript (strict mode)
+- **Styles**: Vanilla CSS (native nesting, custom properties — no preprocessor)
+- **Frontend**: Vanilla TypeScript, no frameworks
+- **Flag Images**: REST Countries API (`restcountries.com/v3.1`) — SVG flags fetched at runtime
+- **Deployment**: GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`)
 
 ## Commands
 
 ```bash
-# Install dependencies (also seeds the database via postinstall hook)
+# Install dependencies
 npm install
 
-# Start the server (port 3000 by default)
-node app.js
+# Start dev server (port 5173 by default)
+npm run dev
 
-# Seed database manually (requires mongod running)
-node db/seeds/principles.js
-node db/seeds/flags.js
+# Type-check and build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
 ## Architecture
 
-**Server entry**: `app.js` — sets up Express middleware, Mongoose connection, and mounts routes.
+**Static MPA**: 4 HTML files at the root (`index.html`, `quiz.html`, `watch.html`, `about.html`), each loading its own TypeScript entry point.
 
-**Database connection**: looks for `MONGOLAB_URI` or `MONGOHQ_URL` env vars, falls back to `mongodb://localhost:27017/flags`.
+**Vite Config** (`vite.config.ts`): MPA with `rollupOptions.input` for all 4 pages. Base path: `/good-flag-great-flag/`.
 
-**Routes** (`config/routes.js`): all routes in a single file.
-- `GET /` — renders root page with vexillology principles from DB
-- `GET /quiz` — renders quiz page
-- `GET /flags` — JSON API endpoint returning all flags (used by quiz JS via AJAX)
-- `GET /watch` — renders the TED talk video page
-- `GET /about` — renders about page
+**Data** (`src/data/`):
+- `flags.ts` — ~196 flag classifications (`isoCode`, `name`, `goodFlag`)
 
-**Models** (`models/`):
-- `Flag` — `name`, `isoCode`, `goodFlag` (boolean), `url` (S3 image link)
-- `Principle` — `order`, `title`, `subTitle`, `explanation`
+**Types** (`src/types.ts`): `FlagClassification`, `FlagData` interfaces.
 
-**Views** (`views/`): EJS templates with a shared `layout.ejs`. Pages: `root`, `quiz`, `watch`, `about`.
+**Scripts** (`src/scripts/`):
+- `components/site-header.ts` — `<site-header>` Web Component (Shadow DOM) for header/nav. Mobile menu uses `popover="auto"` for light-dismiss.
+- `components/principle-card.ts` — `<principle-card>` Web Component (Shadow DOM) for NAVA principle sections, configured via HTML attributes.
+- `index.ts` — style import only
+- `quiz.ts` — quiz logic: fetches flag SVGs from REST Countries API, merges with local goodFlag data, runs 10-round quiz. Map overlay uses `popover="manual"`.
+- `watch.ts` — style import only
+- `about.ts` — style import only
 
-**Frontend JS** (`public/scripts/`): `quiz.js` fetches `/flags` via AJAX and drives the quiz interaction. `main.js` handles UI effects.
+**Styles** (`src/styles/main.css`): Single vanilla CSS file using native nesting and custom properties. Nav styles are inside `<site-header>` Shadow DOM, principle styles are inside `<principle-card>` Shadow DOM.
 
-**Seeds** (`db/seeds/`): `flags.js` and `principles.js` clear and re-populate their collections. The flags seed uses a REPL context and only calls `process.exit()` after the last flag is created (Zimbabwe), so earlier flags are created asynchronously.
+**Routes**:
+- `index.html` — home page with vexillology principles
+- `quiz.html` — quiz page
+- `watch.html` — TED talk video + SoundCloud embed
+- `about.html` — credits page

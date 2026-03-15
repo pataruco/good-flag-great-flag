@@ -4,7 +4,8 @@
       "Bash(node:*)",
       "Bash(nvm ls:*)",
       "Bash(fnm ls:*)",
-      "Read(//Users/pataruco/.nvm/versions/node/**)"
+      "Read(//Users/pataruco/.nvm/versions/node/**)",
+      "WebFetch(domain:restcountries.com)"
     ]
   }
 }
