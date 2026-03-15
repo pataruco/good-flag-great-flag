@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watch &amp; Listen | Good Flag Great Flag</title>
+    <link rel="icon" type="image/svg+xml" href="/good-flag-great-flag/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <script type="module" src="/src/scripts/components/site-header.ts"></script>
+  </head>
+  <body>
+    <site-header></site-header>
+    <main id="main-content">
+      <section class="section watch-intro" aria-labelledby="watch-heading">
+        <article>
+          <h1 id="watch-heading" class="visually-hidden">
+            Watch and Listen
+          </h1>
+          <p>
+            Watch the TED talk that inspired this site, and explore past
+            episodes of Roman Mars' <em>99% Invisible</em> podcast.
+          </p>
+        </article>
+      </section>
+
+      <section
+        class="section embed-media youtube"
+        aria-labelledby="youtube-heading"
+      >
+        <article>
+          <h2 id="youtube-heading" class="visually-hidden">TED Talk</h2>
+          <iframe
+            src="https://www.youtube.com/embed/pnv5iKB2hl4"
+            allowfullscreen
+            loading="lazy"
+            title="Roman Mars TED talk: Why city flags may be the worst-designed thing you've never noticed"
+          ></iframe>
+        </article>
+      </section>
+
+      <section
+        class="section embed-media soundcloud"
+        aria-labelledby="soundcloud-heading"
+      >
+        <article>
+          <h2 id="soundcloud-heading" class="visually-hidden">Podcast</h2>
+          <iframe
+            loading="lazy"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5539303&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"
+            title="99% Invisible podcast on SoundCloud"
+          ></iframe>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
