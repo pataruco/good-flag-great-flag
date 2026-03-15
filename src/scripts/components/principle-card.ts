@@ -6,52 +6,84 @@ template.innerHTML = `
 <style>
   :host {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100svh;
     width: 100%;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     background-color: var(--bg-color);
     color: var(--text-color, white);
-    font-family: inherit;
+    font-family: "Source Sans 3", system-ui, sans-serif;
+    padding: 4rem 2rem;
   }
 
   article {
-    width: 90%;
+    width: min(90%, 48rem);
     margin: 0 auto;
-    padding: 2em;
-    box-shadow: 1em 1em rgba(0, 0, 0, 0.65);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    box-shadow: 0.6rem 0.6rem rgba(0, 0, 0, 0.55);
     background-color: var(--card-color);
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 0 1.2rem;
+    align-items: start;
   }
 
   .order {
-    font-size: 10rem;
-    font-weight: bold;
-    float: left;
-    line-height: 1em;
-    padding-right: 0.2em;
-    text-shadow: 0.12em 0.12em rgba(0, 0, 0, 0.65);
+    font-family: "Merriweather", Georgia, serif;
+    font-size: clamp(5rem, 12vw, 10rem);
+    font-weight: 800;
+    line-height: 0.85;
+    grid-row: 1 / -1;
+    align-self: center;
+    opacity: 0.3;
   }
 
   h3 {
-    font-size: 2rem;
-    font-family: inherit;
+    font-family: "Merriweather", Georgia, serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.3em;
   }
 
   h4 {
-    font-size: 1.5rem;
-    font-family: inherit;
+    font-family: "Merriweather", Georgia, serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 500;
+    line-height: 1.4;
+    opacity: 0.9;
+    margin-bottom: 0.6em;
   }
 
   p {
-    font-size: 1.2rem;
-    font-weight: 300;
-    font-family: inherit;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    font-weight: 400;
+    line-height: 1.7;
+    opacity: 0.9;
+    max-width: 55ch;
   }
 
   /* Focus indicators — WCAG 2.4.12 (AAA) */
   :focus-visible {
     outline: 3px solid #005fcc;
     outline-offset: 2px;
+  }
+
+  /* Stack on small screens */
+  @media (max-width: 480px) {
+    article {
+      grid-template-columns: 1fr;
+    }
+
+    .order {
+      grid-row: auto;
+      font-size: 4rem;
+      margin-bottom: 0.2em;
+    }
   }
 </style>
 

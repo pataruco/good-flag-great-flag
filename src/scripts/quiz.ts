@@ -15,8 +15,10 @@ const iframeWhereEl = document.getElementById(
 	"iframe-where",
 ) as HTMLIFrameElement;
 const renderAnswerEl = document.getElementById("render-answer") as HTMLElement;
+const playAgainBtn = document.getElementById("play-again") as HTMLButtonElement;
 const scoreEl = document.getElementById("score") as HTMLElement;
 const triesEl = document.getElementById("tries") as HTMLElement;
+const progressEl = document.getElementById("quiz-progress") as HTMLElement;
 
 // State
 let flags: FlagData[] = [];
@@ -50,6 +52,32 @@ function pickRandom(arr: FlagData[], n: number): FlagData[] {
 	return shuffled.slice(0, n);
 }
 
+function initProgress(): void {
+	while (progressEl.firstChild) {
+		progressEl.removeChild(progressEl.firstChild);
+	}
+	for (let i = 0; i < ROUND_SIZE; i++) {
+		const dot = document.createElement("span");
+		dot.className = "quiz-progress-dot";
+		if (i === 0) dot.classList.add("active");
+		dot.setAttribute("aria-hidden", "true");
+		progressEl.appendChild(dot);
+	}
+	progressEl.setAttribute("aria-valuenow", "0");
+}
+
+function updateProgressDot(index: number, correct: boolean): void {
+	const dots = progressEl.querySelectorAll(".quiz-progress-dot");
+	if (dots[index]) {
+		dots[index].classList.remove("active");
+		dots[index].classList.add(correct ? "correct" : "wrong");
+	}
+	if (index + 1 < ROUND_SIZE && dots[index + 1]) {
+		dots[index + 1].classList.add("active");
+	}
+	progressEl.setAttribute("aria-valuenow", String(index + 1));
+}
+
 function startRound(): void {
 	roundFlags = pickRandom(flags, ROUND_SIZE);
 	roundIndex = 0;
@@ -58,7 +86,9 @@ function startRound(): void {
 	renderScore();
 	renderTries();
 	renderAnswerEl.textContent = "";
+	playAgainBtn.style.display = "none";
 	setButtonsEnabled(true);
+	initProgress();
 	renderFlag();
 }
 
@@ -98,6 +128,7 @@ async function loadFlags(): Promise<void> {
 		whereBtn.style.display = "";
 		flagImgEl.style.display = "";
 		quizBtnsEl.style.display = "";
+		progressEl.style.display = "";
 
 		startRound();
 	} catch {
@@ -143,6 +174,7 @@ function evaluateFlag(isGood: boolean): void {
 	} else {
 		renderAnswerEl.textContent = "Wrong!";
 	}
+	updateProgressDot(tries, correct);
 	tries++;
 	renderScore();
 	renderTries();
@@ -166,8 +198,9 @@ function renderTries(): void {
 }
 
 function renderRoundComplete(): void {
-	renderAnswerEl.textContent = `Congratulations! You scored ${score} / ${tries}. Click here to play again.`;
+	renderAnswerEl.textContent = `You scored ${score} out of ${tries}.`;
 	animateCss(renderAnswerEl, "animate-bounce-in");
+	playAgainBtn.style.display = "";
 	setButtonsEnabled(false);
 }
 
@@ -175,13 +208,7 @@ function renderRoundComplete(): void {
 whereBtn.addEventListener("click", showWhere);
 goodFlagBtn.addEventListener("click", () => evaluateFlag(true));
 badFlagBtn.addEventListener("click", () => evaluateFlag(false));
-renderAnswerEl.addEventListener("click", () => {
-	if (tries === ROUND_SIZE) {
-		startRound();
-	} else {
-		renderAnswerEl.textContent = "";
-	}
-});
+playAgainBtn.addEventListener("click", () => startRound());
 
 // Start
 loadFlags();

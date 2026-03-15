@@ -6,7 +6,8 @@
       "Bash(fnm ls:*)",
       "Read(//Users/pataruco/.nvm/versions/node/**)",
       "WebFetch(domain:restcountries.com)",
-      "Bash(npm run build)"
+      "Bash(npm run build)",
+      "Bash(source:*)"
     ]
   }
 }

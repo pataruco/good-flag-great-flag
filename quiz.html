@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/src/styles/main.css" />
@@ -21,11 +21,21 @@
   </head>
   <body>
     <site-header></site-header>
-    <main id="main-content" class="quiz-feature clearfix">
+    <main id="main-content" class="quiz-feature">
       <section id="render-flag" class="render-flag" aria-labelledby="flag-name">
         <p id="quiz-loading" class="quiz-loading" role="status">
           Loading flags...
         </p>
+        <div
+          id="quiz-progress"
+          class="quiz-progress"
+          style="display: none"
+          role="progressbar"
+          aria-label="Quiz progress"
+          aria-valuemin="0"
+          aria-valuemax="10"
+          aria-valuenow="0"
+        ></div>
         <button
           id="where"
           class="where-button"
@@ -38,13 +48,13 @@
         <img id="flag-img" src="" alt="" style="display: none" />
         <div class="quiz-btns" style="display: none" id="quiz-btns">
           <button class="quiz-btn" id="bad-flag" type="button">
-            Bad Flag ✘
+            Bad Flag
           </button>
           <button class="quiz-btn" id="good-flag" type="button">
-            Good Flag ✔
+            Good Flag
           </button>
         </div>
-        <div class="render-where clearfix" id="render-where" popover="manual">
+        <div class="render-where" id="render-where" popover="manual">
           <button
             class="close-map"
             aria-label="Close map"
@@ -52,7 +62,7 @@
             popovertarget="render-where"
             popovertargetaction="hide"
           >
-            X
+            ✕
           </button>
           <iframe
             src=""
@@ -67,6 +77,14 @@
         </div>
         <div class="render-answer" aria-live="polite">
           <p id="render-answer"></p>
+          <button
+            id="play-again"
+            class="btn play-again-btn"
+            style="display: none"
+            type="button"
+          >
+            Play again
+          </button>
         </div>
         <div id="render-score" class="render-score">
           <p>Score <span id="score"></span> / <span id="tries"></span></p>
