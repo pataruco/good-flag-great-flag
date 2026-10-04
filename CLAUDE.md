@@ -11,10 +11,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Runtime**: Node 24 (pinned in `.nvmrc`)
 - **Package Manager**: pnpm
 - **Build Tool**: Vite 8 (MPA mode — 4 separate HTML entry points)
-- **Language**: TypeScript 5 (strict mode)
+- **Language**: TypeScript 7 (strict mode)
 - **Styles**: Vanilla CSS (native nesting, custom properties — no preprocessor)
 - **Frontend**: Vanilla TypeScript with Web Components (Shadow DOM), no frameworks
-- **Flag Images**: REST Countries API (`restcountries.com/v3.1`) — SVG flags fetched at runtime
+- **Flag Images**: [flagcdn.com](https://flagcdn.com/) — SVG flags loaded at runtime by lowercase ISO 3166-1 alpha-2 code (`https://flagcdn.com/{code}.svg`). No API call or key needed.
 - **Deployment**: GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`, manual dispatch)
 - **Accessibility**: WCAG 2.2 AAA target
 
@@ -48,7 +48,7 @@ pnpm run preview
 **Scripts** (`src/scripts/`):
 - `components/site-header.ts` — `<site-header>` Web Component (Shadow DOM) for header/nav. Mobile menu uses `popover="auto"` for light-dismiss. Includes skip link, brand link, and responsive layout (hamburger on mobile, inline nav on desktop ≥769px).
 - `components/principle-card.ts` — `<principle-card>` Web Component (Shadow DOM) for NAVA principle sections. Configured via HTML attributes (`order`, `card-title`, `subtitle`, `explanation`, `bg-color`, `card-color`, `text-color`). Uses CSS Grid, fluid sizing with `clamp()`, and sets `role="region"` with `aria-label`.
-- `quiz.ts` — quiz logic: fetches flag SVGs from REST Countries API, merges with local `goodFlag` data, runs 10-round quiz. Map overlay uses `popover="manual"`. Includes progress bar with `role="progressbar"`.
+- `quiz.ts` — quiz logic: builds flagcdn SVG URLs from local `goodFlag` data, runs 10-round quiz. Map overlay uses `popover="manual"`. Includes progress bar with `role="progressbar"`.
 
 **Styles** (`src/styles/main.css`): Single vanilla CSS file using native nesting and custom properties (design tokens for fonts, colors, spacing, shadows). Nav styles are inside `<site-header>` Shadow DOM, principle card styles are inside `<principle-card>` Shadow DOM. Includes `prefers-reduced-motion` media query and `.visually-hidden` utility.
 
