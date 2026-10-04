@@ -97,44 +97,29 @@ function setButtonsEnabled(enabled: boolean): void {
 	goodFlagBtn.disabled = !enabled;
 }
 
-// Fetch flags from REST Countries API and merge with local data
-async function loadFlags(): Promise<void> {
-	const codes = flagClassifications.map((f) => f.isoCode).join(",");
-	try {
-		const response = await fetch(
-			`https://restcountries.com/v3.1/alpha?codes=${codes}&fields=flags,cca2`,
-		);
-		if (!response.ok) throw new Error(`API responded with ${response.status}`);
-		const apiFlags: Array<{
-			cca2: string;
-			flags: { svg: string; alt: string };
-		}> = await response.json();
+// Flag SVGs are served by flagcdn.com, keyed by lowercase ISO 3166-1 alpha-2 code.
+// (REST Countries used to provide these URLs, but its free API was retired.)
+const FLAG_CDN_BASE = "https://flagcdn.com";
 
-		const apiMap = new Map(apiFlags.map((f) => [f.cca2, f.flags]));
+function flagSvgUrl(isoCode: string): string {
+	return `${FLAG_CDN_BASE}/${isoCode.toLowerCase()}.svg`;
+}
 
-		flags = flagClassifications
-			.map((fc) => {
-				const apiData = apiMap.get(fc.isoCode);
-				if (!apiData) return null;
-				return {
-					...fc,
-					svgUrl: apiData.svg,
-					alt: apiData.alt || `Flag of ${fc.name}`,
-				};
-			})
-			.filter((f): f is FlagData => f !== null);
+// Build the flag list from local data and start the quiz
+function loadFlags(): void {
+	flags = flagClassifications.map((fc) => ({
+		...fc,
+		svgUrl: flagSvgUrl(fc.isoCode),
+		alt: `Flag of ${fc.name}`,
+	}));
 
-		loadingEl.style.display = "none";
-		whereBtn.style.display = "";
-		flagImgEl.style.display = "";
-		quizBtnsEl.style.display = "";
-		progressEl.style.display = "";
+	loadingEl.style.display = "none";
+	whereBtn.style.display = "";
+	flagImgEl.style.display = "";
+	quizBtnsEl.style.display = "";
+	progressEl.style.display = "";
 
-		startRound();
-	} catch {
-		loadingEl.textContent =
-			"Failed to load flags. Please refresh the page to try again.";
-	}
+	startRound();
 }
 
 function renderFlag(): void {

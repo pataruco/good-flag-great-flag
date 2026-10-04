@@ -9,10 +9,10 @@ Users learn the 5 principles of good flag design, then take a quiz judging wheth
 - Runtime: Node 24
 - Package Manager: pnpm
 - Build Tool: Vite (MPA mode)
-- Language: TypeScript (strict mode)
+- Language: TypeScript 7 (strict mode)
 - Styles: Vanilla CSS (native nesting, custom properties)
 - Frontend: Vanilla TypeScript with Web Components (Shadow DOM)
-- Flag Images: [REST Countries API](https://restcountries.com/) — SVG flags fetched at runtime
+- Flag Images: [flagcdn.com](https://flagcdn.com/) — SVG flags loaded by ISO code at runtime
 - Deployment: GitHub Pages
 
 ## Getting Started

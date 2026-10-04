@@ -6,10 +6,10 @@ export default defineConfig({
 	build: {
 		rollupOptions: {
 			input: {
-				index: resolve(__dirname, "index.html"),
-				quiz: resolve(__dirname, "quiz.html"),
-				watch: resolve(__dirname, "watch.html"),
-				about: resolve(__dirname, "about.html"),
+				index: resolve(import.meta.dirname, "index.html"),
+				quiz: resolve(import.meta.dirname, "quiz.html"),
+				watch: resolve(import.meta.dirname, "watch.html"),
+				about: resolve(import.meta.dirname, "about.html"),
 			},
 		},
 	},

@@ -1,0 +1,5 @@
+# pnpm settings only (no workspace packages).
+# @parcel/watcher ships prebuilt binaries as optional deps, so its
+# node-gyp build script is not needed and is explicitly denied here.
+allowBuilds:
+  '@parcel/watcher': false
